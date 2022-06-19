@@ -1,0 +1,55 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: 8vh;
+  border: 0.5px solid black;
+}
+
+#logo {
+  margin: 10px;
+  font-weight: bold;
+}
+
+#nav-links {
+  padding: 3px;
+  margin: 5px;
+  align-content: center;
+  border: 1px solid black;
+}
+
+#hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../imgs/hero-image.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+#languages {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: 30vh;
+}
+
+.language-images {
+  display: flex;
+  margin: 5px;
+  max-width: 90vw;
+  max-height: 15vh;
+}
+
+.language-images img {
+  height: 30%;
+  width: auto;
+}
