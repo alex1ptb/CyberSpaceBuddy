@@ -3,53 +3,96 @@ body {
   padding: 0px;
 }
 
-.navbar {
+.section {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: gray;
   width: 100vw;
-  height: 8vh;
-  border: 0.5px solid black;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 10px;
+  position: relative;
 }
 
-#logo {
-  margin: 10px;
+/*Navbar with fixed on top position */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: inline-block;
+  z-index: 1;
+}
+
+/* Style the navigation bar links*/
+.navbar a {
+  color: white;
+  text-align: center;
+  padding: 14px 16px 14px 16px;
+  text-decoration: none;
+  border: 0.02px solid #ddd;
+  border-radius: 3%;
+}
+
+.navbar a:hover {
+  /* Change color on hover */
+  background-color: #ddd;
+  color: black;
+  /* make font pop up and bold */
+  font-weight: bold;
+}
+
+.navbar #logo {
+  float: left;
+  font-size: 30px;
   font-weight: bold;
 }
 
 #nav-links {
-  padding: 3px;
-  margin: 5px;
-  align-content: center;
-  border: 1px solid black;
+  float: right;
 }
 
+/* Button Styling */
+.btn {
+  border: 1px solid red;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 300;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 3%;
+  width: fit-content;
+}
+#hero-section-btn {
+  /*position button to bottom right of div*/
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/*Hero section */
 #hero-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-image: url("../imgs/hero-image.jpg");
+  /* position: relative; */
+  background-image: url("../imgs/hero-image-new.jpg");
   background-size: cover;
   background-position: center;
+  /* darken the background image */
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
 }
 
-#languages {
-  display: flex;
-  flex-direction: column;
-  width: 90vw;
-  height: 30vh;
+#knowledge img {
+  height: 50px;
 }
 
-.language-images {
-  display: flex;
-  margin: 5px;
-  max-width: 90vw;
-  max-height: 15vh;
-}
-
-.language-images img {
-  height: 30%;
-  width: auto;
-}
+/* #languages {
+  position: relative;
+} */
