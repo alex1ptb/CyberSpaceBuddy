@@ -24,7 +24,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       <textarea
         value={value}
         onChange={onChange}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         placeholder="Type your message..."
         rows={1}
         className="flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 resize-none text-sm"
