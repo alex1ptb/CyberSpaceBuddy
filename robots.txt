@@ -1,0 +1,20 @@
+
+User-agent: *
+Allow: /
+Allow: /#/
+Allow: /#/services
+Allow: /#/subscription-plans 
+Allow: /#/faq
+Allow: /#/contact
+Allow: /#/careers 
+Allow: /#/about 
+Allow: /#/privacy 
+Allow: /#/terms 
+
+Disallow: /#/client-portal
+Disallow: /#/team-admin-portal
+Disallow: /#/request-quote
+Disallow: /#/submit-ticket
+Disallow: /#/pay-invoice
+
+Sitemap: https://www.cyberspacebuddy.com/sitemap.xml
