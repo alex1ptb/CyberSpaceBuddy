@@ -41,7 +41,7 @@ This document outlines potential features and improvements for the Cyberspace Bu
 | High     | [ ]    | API Integration      | **Real Backend for Client Portal:** Connect login, projects, tasks, messages, notifications to a database.                                                        |
 | Medium   | [ ]    | API Integration      | **Payment Gateway Integration:** Fully implement PayPal or Stripe for `PayInvoicePage`.                                                                           |
 | Medium   | [ ]    | API Integration      | **Gemini API for Content Generation:** Integrate `geminiService.ts` into a user-facing feature (e.g., idea generator, content assistant). Requires API key setup. |
-| Low      | [ ]    | UI/UX                | **Dark Mode Theme:** Implement a user-selectable dark mode for the entire application.                                                                            |
+| Low      | [~]    | UI/UX                | **Dark Mode Theme:** Implement a user-selectable dark mode for the entire application.                                                                            |
 | Medium   | [x]    | UI/UX                | **Responsiveness Audit & Improvements:** Ensure all pages and components are mobile-friendly. _Ongoing improvements._                                             |
 | Low      | [ ]    | Accessibility (A11y) | **Comprehensive A11y Audit & Improvements:** Ensure WCAG AA compliance across all components and pages.                                                           |
 | Medium   | [ ]    | Performance          | **Code Splitting & Lazy Loading:** Optimize load times for larger pages or features.                                                                              |

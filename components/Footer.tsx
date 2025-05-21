@@ -1,90 +1,91 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { APP_NAME, FOOTER_LINKS, APP_TAGLINE } from "../constants";
-import { SparklesIcon } from "./icons/SparklesIcon";
+import { FOOTER_LINKS, SOCIAL_LINKS } from "../constants";
+import { NavLinkItem, SocialLink } from "../types";
+
+// Placeholder for SOCIAL_LINKS if not yet defined in constants
+// If SOCIAL_LINKS is undefined in constants.ts, this will default to an empty array.
+const currentSocialLinks: SocialLink[] = SOCIAL_LINKS || [];
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  // Convert FOOTER_LINKS object into an array of sections for easier mapping
+  const footerSections = Object.keys(FOOTER_LINKS).map((key) => {
+    // Type assertion for individual sections if necessary, or ensure FOOTER_LINKS has a more specific type
+    const sectionLinks = (FOOTER_LINKS as any)[key] as NavLinkItem[];
+    return {
+      title: key.charAt(0).toUpperCase() + key.slice(1).toLowerCase(), // Capitalize title from key
+      links: sectionLinks,
+    };
+  });
+
   return (
-    <footer className="bg-gray-800 text-gray-300 py-8 sm:py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link
-              to="/"
-              className="flex items-center text-white hover:text-blue-400 transition-colors mb-3 sm:mb-4"
-            >
-              <SparklesIcon className="h-7 w-7 sm:h-8 sm:w-8 mr-2 text-blue-500" />
-              <span className="font-bold text-lg sm:text-xl">{APP_NAME}</span>
+    <footer className="bg-gray-200 dark:bg-secondary-end border-t border-gray-300 dark:border-secondary-start">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Logo and Company Info */}
+          <div className="space-y-4">
+            <Link to="/" className="flex items-center">
+              <img
+                className="h-10 w-auto"
+                src="/logo/Cyber Space-FF.svg"
+                alt="Cyber Space Buddy"
+              />
             </Link>
-            <p className="text-xs sm:text-sm text-gray-400">{APP_TAGLINE}</p>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Your trusted partner for digital transformation and online
+              success.
+            </p>
+            {/* Social Links */}
+            {currentSocialLinks.length > 0 && (
+              <div className="flex space-x-4">
+                {currentSocialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-primary-start dark:text-gray-400 dark:hover:text-primary-start"
+                  >
+                    <span className="sr-only">{social.name}</span>
+                    {/* Ensure social.icon is a valid component */}
+                    {social.icon && (
+                      <social.icon className="h-6 w-6" aria-hidden="true" />
+                    )}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-          <div>
-            <h5 className="text-md sm:text-lg font-semibold text-white mb-3 sm:mb-4">
-              Company
-            </h5>
-            <ul className="space-y-1.5 sm:space-y-2">
-              {FOOTER_LINKS.COMPANY.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-md sm:text-lg font-semibold text-white mb-3 sm:mb-4">
-              Resources
-            </h5>
-            <ul className="space-y-1.5 sm:space-y-2">
-              {FOOTER_LINKS.RESOURCES.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-md sm:text-lg font-semibold text-white mb-3 sm:mb-4">
-              Support & Legal
-            </h5>
-            <ul className="space-y-1.5 sm:space-y-2">
-              {FOOTER_LINKS.SUPPORT.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-              {FOOTER_LINKS.LEGAL.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+
+          {/* Footer Links */}
+          <div className="md:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            {footerSections.map((section) => (
+              <div key={section.title}>
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white tracking-wider uppercase">
+                  {section.title}
+                </h3>
+                <ul role="list" className="mt-4 space-y-4">
+                  {section.links.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        to={item.path}
+                        className="text-base text-gray-600 hover:text-primary-start dark:text-gray-300 dark:hover:text-primary-start"
+                      >
+                        {item.name}{" "}
+                        {/* Use item.name which is the original property */}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-gray-700 text-center">
-          <p className="text-xs sm:text-sm text-gray-400">
-            &copy; {currentYear} {APP_NAME}. All rights reserved.
+        <div className="mt-12 border-t border-gray-200 dark:border-secondary-start pt-8">
+          <p className="text-base text-gray-500 dark:text-gray-400 xl:text-center">
+            &copy; {currentYear} Cyber Space Buddy. All rights reserved.
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import {
   Project,
   Message,
   Notification,
+  SocialLink,
 } from "./types";
 import { HomeIcon } from "./components/icons/HomeIcon";
 import { LightBulbIcon } from "./components/icons/LightBulbIcon";
@@ -18,7 +19,6 @@ import { AcademicCapIcon } from "./components/icons/AcademicCapIcon";
 import { ShieldCheckIcon } from "./components/icons/ShieldCheckIcon";
 import { SparklesIcon } from "./components/icons/SparklesIcon";
 import { DocumentTextIcon } from "./components/icons/DocumentTextIcon";
-import { ChatBubbleIcon } from "./components/icons/ChatBubbleIcon";
 import { MagnifyingGlassIcon } from "./components/icons/MagnifyingGlassIcon";
 import { UsersIcon } from "./components/icons/UsersIcon";
 import { ClipboardListIcon } from "./components/icons/ClipboardListIcon";
@@ -29,6 +29,7 @@ import { BellIcon } from "./components/icons/BellIcon";
 import { UserGroupIcon } from "./components/icons/UserGroupIcon";
 import { CogIcon } from "./components/icons/CogIcon";
 import { BuildingOffice2Icon } from "./components/icons/BuildingOffice2Icon"; // New Icon
+import PlaceholderSocialIcon from "./components/icons/PlaceholderSocialIcon"; // Import the new icon component
 
 export const APP_NAME = "Cyberspace Buddy";
 export const APP_TAGLINE = "Your Partner for Digital Growth & Automation";
@@ -252,6 +253,29 @@ export const FOOTER_LINKS = {
     NAV_LINKS.SUBMIT_TICKET,
   ],
 };
+
+export const SOCIAL_LINKS: SocialLink[] = [
+  {
+    name: "Facebook",
+    href: "https://facebook.com/yourpage",
+    icon: PlaceholderSocialIcon,
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com/yourhandle",
+    icon: PlaceholderSocialIcon,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com/company/yourcompany",
+    icon: PlaceholderSocialIcon,
+  },
+  {
+    name: "Instagram",
+    href: "https://instagram.com/yourprofile",
+    icon: PlaceholderSocialIcon,
+  },
+];
 
 export const mockClientData: {
   companyName: string;

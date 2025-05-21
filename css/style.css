@@ -1,6 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Morris font if you have it locally or via a CDN link */
+/* Example using a local font file (adjust path and formats as needed): */
+@font-face {
+  font-family: 'Morris';
+  src: url('/fonts/Morris-Regular.woff2') format('woff2'), /* Adjust path and file names */
+       url('/fonts/Morris-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Morris';
+  src: url('/fonts/Morris-Bold.woff2') format('woff2'), /* Adjust path and file names */
+       url('/fonts/Morris-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+/* Add other weights/styles if available and needed */
+
+body {
+  @apply font-sans;
+  /* Base text color - adjust if your PDF specifies a different default */
+  @apply text-gray-700 dark:text-gray-300;
+  /* Gradient background example - apply to specific elements as needed, not usually body */
+  /* @apply bg-gradient-to-r from-primary-start to-primary-end; */
+}
+
+.text-gradient-primary {
+  @apply bg-gradient-to-r from-primary-start to-primary-end text-transparent bg-clip-text;
+}
+
+.text-gradient-secondary {
+  @apply bg-gradient-to-r from-secondary-start to-secondary-end text-transparent bg-clip-text;
+}
+
+.bg-gradient-primary {
+  @apply bg-gradient-to-r from-primary-start to-primary-end;
+}
+
+.bg-gradient-secondary {
+  @apply bg-gradient-to-r from-secondary-start to-secondary-end;
+}
+
+/* Update other base styles as per your PDF */
+h1, h2, h3, h4, h5, h6 {
+  /* If Morris is specifically for headings and you defined a 'heading' font family in Tailwind: */
+  /* @apply font-heading; */
+  /* Or just rely on the base sans if Morris is the default */
+  @apply font-bold; /* Example, adjust weight based on PDF */
+  /* You might want to apply a text gradient to primary headings */
+  /* e.g., h1: @apply text-gradient-primary; */
+}
+
 body {
   margin: 0px;
   padding: 0px;
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+  transition-colors duration-300 ease-in-out;
 }
 
 .section {
@@ -96,3 +155,26 @@ body {
 /* #languages {
   position: relative;
 } */
+
+/* Add other global style adjustments for dark mode as needed */
+.card {
+  @apply bg-white dark:bg-gray-800 shadow-md rounded-lg;
+}
+
+.button-primary {
+  /* Example: Using primary gradient for buttons */
+  @apply bg-gradient-primary text-white;
+  /* Add hover, focus states based on your design */
+}
+
+.button-secondary {
+    /* Example: Using secondary gradient for buttons */
+  @apply bg-gradient-secondary text-white;
+  /* Add hover, focus states based on your design */
+}
+
+/* Ensure links and other elements have dark mode considerations */
+a {
+  /* Example: Using a solid color from your palette for links */
+  @apply text-primary-start hover:text-primary-end dark:text-primary-start dark:hover:text-primary-end;
+}

@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { NAV_LINKS, APP_NAME } from "../constants";
-import { NavLinkItem } from "../types";
-import { MenuIcon } from "./icons/MenuIcon";
-import { CloseIcon } from "./icons/CloseIcon";
-import { SparklesIcon } from "./icons/SparklesIcon";
+import { NAV_LINKS } from "../constants";
+import ThemeToggleButton from "./ThemeToggleButton";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
   const mainNavLinks = [
     NAV_LINKS.HOME,
     NAV_LINKS.SERVICES,
-    NAV_LINKS.SERVICE_PACKAGES, // Name will update from "Service Packages" to "Subscription Plans" via constants.ts
-    NAV_LINKS.CAREERS, // New Link
+    NAV_LINKS.SERVICE_PACKAGES,
+    NAV_LINKS.CAREERS,
     NAV_LINKS.FAQ,
-    NAV_LINKS.REQUEST_QUOTE, // Moved for logical flow
+    NAV_LINKS.REQUEST_QUOTE,
     NAV_LINKS.CONTACT,
     NAV_LINKS.TEAM_PORTAL,
   ];
 
   const NavItem: React.FC<{
-    link: NavLinkItem;
+    link: (typeof NAV_LINKS)[keyof typeof NAV_LINKS];
     onClick?: () => void;
     isPrimaryCTA?: boolean;
     isMobile?: boolean;
@@ -67,19 +74,19 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-white dark:bg-gray-800 shadow-sm fixed w-full z-50 top-0 left-0 border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link
-              to="/"
-              className="flex-shrink-0 flex items-center text-blue-600 hover:text-blue-700 transition-colors"
-            >
-              <SparklesIcon className="h-8 w-8 mr-1 sm:mr-2" />
-              <span className="font-bold text-lg sm:text-xl">{APP_NAME}</span>
+            <Link to="/" className="flex-shrink-0">
+              <img
+                className="h-8 w-auto"
+                src="/logo/Cyber Space-FF.svg"
+                alt="Cyber Space Buddy"
+              />
             </Link>
           </div>
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-4">
             <div className="ml-4 lg:ml-10 flex items-baseline space-x-1 lg:space-x-2">
               {mainNavLinks.map(
                 (link) => link && <NavItem key={link.name} link={link} />
@@ -93,43 +100,31 @@ const Navbar: React.FC = () => {
                 )}
               </div>
             </div>
+            <ThemeToggleButton />
           </div>
-          <div className="md:hidden flex items-center">
-            {NAV_LINKS.CLIENT_PORTAL && (
-              <Link
-                to={NAV_LINKS.CLIENT_PORTAL.path}
-                className="text-gray-700 hover:bg-blue-500 hover:text-white px-2 py-1 sm:px-3 sm:py-2 rounded-md text-xs sm:text-sm font-medium mr-1 sm:mr-2 flex items-center"
-                onClick={() => setIsOpen(false)}
-              >
-                {NAV_LINKS.CLIENT_PORTAL.icon && (
-                  <NAV_LINKS.CLIENT_PORTAL.icon className="w-4 h-4 sm:w-5 sm:h-5 inline sm:mr-1" />
-                )}
-                <span className="hidden sm:inline">
-                  {NAV_LINKS.CLIENT_PORTAL.name}
-                </span>
-                <span className="sm:hidden">Portal</span>
-              </Link>
-            )}
+          <div className="-mr-2 flex items-center md:hidden">
+            <ThemeToggleButton />
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:text-blue-700 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-              aria-expanded={isOpen}
+              onClick={toggleMobileMenu}
+              type="button"
+              className="ml-2 bg-white dark:bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
               aria-controls="mobile-menu"
+              aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
-              {isOpen ? (
-                <CloseIcon className="block h-6 w-6" />
+              {isMobileMenuOpen ? (
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
               ) : (
-                <MenuIcon className="block h-6 w-6" />
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {isOpen && (
+      {isMobileMenuOpen && (
         <div
-          className="md:hidden absolute top-16 inset-x-0 bg-white shadow-lg z-40"
+          className="md:hidden absolute top-16 inset-x-0 bg-white dark:bg-gray-800 shadow-lg z-40"
           id="mobile-menu"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -139,7 +134,7 @@ const Navbar: React.FC = () => {
                   <NavItem
                     key={link.name}
                     link={link}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     isMobile={true}
                   />
                 )

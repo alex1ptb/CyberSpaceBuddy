@@ -75,3 +75,9 @@ export interface Project {
   tasks: Task[];
   milestones: Milestone[];
 }
+
+export interface SocialLink {
+  name: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
