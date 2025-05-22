@@ -43,9 +43,12 @@ This document outlines potential features and improvements for the Cyberspace Bu
 | Medium   | [ ]    | API Integration      | **Gemini API for Content Generation:** Integrate `geminiService.ts` into a user-facing feature (e.g., idea generator, content assistant). Requires API key setup. |
 | Low      | [~]    | UI/UX                | **Dark Mode Theme:** Implement a user-selectable dark mode for the entire application.                                                                            |
 | Medium   | [x]    | UI/UX                | **Responsiveness Audit & Improvements:** Ensure all pages and components are mobile-friendly. _Ongoing improvements._                                             |
+| Low      | [x]    | UI/UX                | **Footer UI:** Updated footer color scheme to match navbar for visual consistency.                                                                                |
+| Medium   | [x]    | UI/UX                | **Navbar Navigation:** Implemented a "Login" dropdown for Client and Team Portal access.                                                                          |
 | Low      | [ ]    | Accessibility (A11y) | **Comprehensive A11y Audit & Improvements:** Ensure WCAG AA compliance across all components and pages.                                                           |
 | Medium   | [ ]    | Performance          | **Code Splitting & Lazy Loading:** Optimize load times for larger pages or features.                                                                              |
 | Medium   | [ ]    | Public Site Features | **Careers Page with Job Listings (Mocked):** Display company culture and open positions.                                                                          |
+| Medium   | [x]    | Public Site Features | **Contact Page Content:** Updated page to reflect digital-first operations (no physical address/map).                                                             |
 
 ## Billing & Monetization
 

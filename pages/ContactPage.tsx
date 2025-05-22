@@ -97,14 +97,11 @@ const ContactPage: React.FC = () => {
         <div className="space-y-6 sm:space-y-8 text-sm sm:text-base">
           <div>
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4">
-              Our Office
+              Contact Information
             </h2>
             <p className="text-gray-600">
-              123 Cyber Street
-              <br />
-              Tech City, TC 54321
-              <br />
-              United States
+              As a digital-first company, we primarily operate online. Please
+              reach out to us via email or phone for any inquiries.
             </p>
           </div>
           <div>
@@ -127,14 +124,6 @@ const ContactPage: React.FC = () => {
             <p className="text-gray-600">Monday - Friday: 9 AM - 6 PM (EST)</p>
             <p className="text-gray-600">Saturday - Sunday: Closed</p>
           </div>
-        </div>
-      </div>
-      <div className="mt-10 md:mt-12 pt-8 border-t border-gray-200">
-        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 text-center">
-          Find Us
-        </h2>
-        <div className="bg-gray-200 h-48 sm:h-64 rounded-md flex items-center justify-center text-gray-500">
-          Map Placeholder (e.g., Google Maps embed)
         </div>
       </div>
     </div>

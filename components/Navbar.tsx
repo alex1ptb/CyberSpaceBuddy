@@ -1,21 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NAV_LINKS } from "../constants";
 import ThemeToggleButton from "./ThemeToggleButton";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPortalDropdownOpen, setIsPortalDropdownOpen] = useState(false);
   const location = useLocation();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsPortalDropdownOpen(false);
   };
 
-  // Close mobile menu on route change
+  const togglePortalDropdown = () => {
+    setIsPortalDropdownOpen(!isPortalDropdownOpen);
+  };
+
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsPortalDropdownOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsPortalDropdownOpen(false);
+      }
+    };
+    if (isPortalDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isPortalDropdownOpen]);
 
   const mainNavLinks = [
     NAV_LINKS.HOME,
@@ -25,7 +53,6 @@ const Navbar: React.FC = () => {
     NAV_LINKS.FAQ,
     NAV_LINKS.REQUEST_QUOTE,
     NAV_LINKS.CONTACT,
-    NAV_LINKS.TEAM_PORTAL,
   ];
 
   const NavItem: React.FC<{
@@ -40,17 +67,24 @@ const Navbar: React.FC = () => {
     }`;
     const activeClasses = isPrimaryCTA
       ? "bg-yellow-500 text-gray-900"
-      : "bg-blue-700 text-white";
+      : "bg-blue-700 text-white dark:bg-blue-600";
     const inactiveClasses = isPrimaryCTA
       ? "bg-yellow-400 text-gray-900 hover:bg-yellow-500"
-      : "text-gray-700 hover:bg-blue-500 hover:text-white";
+      : "text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white";
 
     const IconComponent = link.icon;
+
+    const handleClick = () => {
+      if (onClick) {
+        onClick();
+      }
+      setIsPortalDropdownOpen(false);
+    };
 
     return (
       <Link
         to={link.path}
-        onClick={onClick}
+        onClick={handleClick}
         className={`${baseClasses} ${
           isActive ? activeClasses : inactiveClasses
         }`}
@@ -64,11 +98,46 @@ const Navbar: React.FC = () => {
                 ? "text-gray-900"
                 : isActive
                 ? "text-white"
-                : ""
+                : isMobile
+                ? "text-gray-700 dark:text-gray-300"
+                : "text-gray-700 dark:text-gray-300"
             }`}
           />
         )}
         {link.name}
+      </Link>
+    );
+  };
+
+  const DropdownItem: React.FC<{
+    linkInfo: (typeof NAV_LINKS)[keyof typeof NAV_LINKS];
+    onClick: () => void;
+  }> = ({ linkInfo, onClick }) => {
+    const location = useLocation();
+    const isActive = location.pathname === linkInfo.path;
+    const IconComponent = linkInfo.icon;
+
+    return (
+      <Link
+        to={linkInfo.path}
+        onClick={onClick}
+        className={`flex items-center w-full text-left px-4 py-2 text-sm ${
+          isActive
+            ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+            : "text-gray-700 dark:text-gray-300"
+        } hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white rounded-md`}
+        role="menuitem"
+      >
+        {IconComponent && (
+          <IconComponent
+            className={`w-5 h-5 mr-2 ${
+              isActive
+                ? "text-gray-900 dark:text-white"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          />
+        )}
+        {linkInfo.name}
       </Link>
     );
   };
@@ -91,12 +160,44 @@ const Navbar: React.FC = () => {
               {mainNavLinks.map(
                 (link) => link && <NavItem key={link.name} link={link} />
               )}
-              <div className="ml-1 lg:ml-2">
-                {NAV_LINKS.CLIENT_PORTAL && (
-                  <NavItem
-                    link={NAV_LINKS.CLIENT_PORTAL}
-                    isPrimaryCTA={false}
+              <div className="relative ml-1 lg:ml-2" ref={dropdownRef}>
+                <button
+                  onClick={togglePortalDropdown}
+                  type="button"
+                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-colors duration-150 ease-in-out md:text-base focus:outline-none"
+                  id="portal-menu-button"
+                  aria-expanded={isPortalDropdownOpen}
+                  aria-haspopup="true"
+                >
+                  Login
+                  <ChevronDownIcon
+                    className={`w-5 h-5 ml-1 transition-transform duration-150 ${
+                      isPortalDropdownOpen ? "transform rotate-180" : ""
+                    }`}
                   />
+                </button>
+                {isPortalDropdownOpen && (
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 focus:outline-none z-50"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="portal-menu-button"
+                  >
+                    <div className="py-1 px-1" role="none">
+                      {NAV_LINKS.CLIENT_PORTAL && (
+                        <DropdownItem
+                          linkInfo={NAV_LINKS.CLIENT_PORTAL}
+                          onClick={() => setIsPortalDropdownOpen(false)}
+                        />
+                      )}
+                      {NAV_LINKS.TEAM_PORTAL && (
+                        <DropdownItem
+                          linkInfo={NAV_LINKS.TEAM_PORTAL}
+                          onClick={() => setIsPortalDropdownOpen(false)}
+                        />
+                      )}
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -138,6 +239,22 @@ const Navbar: React.FC = () => {
                     isMobile={true}
                   />
                 )
+            )}
+            {NAV_LINKS.CLIENT_PORTAL && (
+              <NavItem
+                key={NAV_LINKS.CLIENT_PORTAL.name}
+                link={NAV_LINKS.CLIENT_PORTAL}
+                onClick={() => setIsMobileMenuOpen(false)}
+                isMobile={true}
+              />
+            )}
+            {NAV_LINKS.TEAM_PORTAL && (
+              <NavItem
+                key={NAV_LINKS.TEAM_PORTAL.name}
+                link={NAV_LINKS.TEAM_PORTAL}
+                onClick={() => setIsMobileMenuOpen(false)}
+                isMobile={true}
+              />
             )}
           </div>
         </div>
